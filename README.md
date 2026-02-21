@@ -6,7 +6,7 @@ A responsive comment platform built with Vanilla JavaScript.  Users can post rev
 A responsive, theme-aware comment platform built with pure HTML, CSS, and JavaScript.
 
 ## 🚀 Live Demo
-[aymanvalipour-cyber.github.io/keydown-comment-app](https://aymanvalipour-cyber.github.io/keydown-comment-app)
+https://aymanvalipour-cyber.github.io/KeydowN/
 
 ## ✨ Features
 - Post comments with hashtag validation (comment must include at least one #hashtag)
