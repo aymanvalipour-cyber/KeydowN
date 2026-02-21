@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User List</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/e195b12aff.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <header>
+      <div class="themeSwitcher">
+        <button class="themeBtn" data-theme="navy"></button>
+        <button class="themeBtn" data-theme="cyber"></button>
+        <button class="themeBtn" data-theme="sunset"></button>
+      </div>
+
+      <h1 class="logo">keYDown</h1>
+    </header>
+    <div class="largeContainer">
+      <div class="typeArea">
+        <form class="form">
+          <textarea
+            name="postText"
+            class="commentTypeSection"
+            placeholder="Type your opinion about services you have had and don't forget #hashtag"
+          ></textarea>
+          <div class="submit_And_CharCounter">
+            <span class="counter">200</span>
+            <button type="submit" class="btn">Submit</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="feedbackArea"></div>
+    </div>
+    <ul class="hashtagContainer">
+      <li class="tagList" id="javascript">#javascript</li>
+      <li class="tagList" id="Nike">#Nike</li>
+      <li class="tagList" id="Adidas">#Adidas</li>
+      <li class="tagList" id="Apple">#Apple</li>
+      <li class="tagList" id="Samsung">#Samsung</li>
+    </ul>
+  </body>
+  <script src="script.js"></script>
+</html>
