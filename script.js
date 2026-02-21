@@ -5,7 +5,8 @@ const formEl = document.querySelector(".form");
 const feedbackArea = document.querySelector(".feedbackArea");
 const themeSwitcher = document.querySelector(".themeSwitcher");
 
-// اسامی و آواتار
+
+// names and avatars 
 const names = [
   "Ayman",
   "Sara",
@@ -53,7 +54,7 @@ tagContainer.addEventListener("click", (e) => {
 const loadComments = () => {
   const data = localStorage.getItem("comments");
   if (data) {
-    feedbackArea.innerHTML = data; // فقط innerHTML بذار
+    feedbackArea.innerHTML = data;  
   }
 };
 loadComments();
@@ -143,7 +144,7 @@ feedbackArea.addEventListener("click", (e) => {
   }
 });
 
-// ----------------- Enter برای ریپلای -----------------
+// for Enter and submit
 feedbackArea.addEventListener("keydown", (e) => {
   if (
     e.target.classList.contains("replyTextArea") &&
@@ -154,7 +155,7 @@ feedbackArea.addEventListener("keydown", (e) => {
     e.target.nextElementSibling.click();
   }
 });
-// انتخاب دکمه‌های تم
+// theme selection
 
 const themeButtons = document.querySelectorAll(".themeBtn");
 const root = document.documentElement;
@@ -244,3 +245,4 @@ document.addEventListener("DOMContentLoaded", () => {
   const savedTheme = localStorage.getItem("theme") || "navy";
   applyTheme(savedTheme);
 });
+
