@@ -4,36 +4,39 @@ const tagContainer = document.querySelector(".hashtagContainer");
 const formEl = document.querySelector(".form");
 const feedbackArea = document.querySelector(".feedbackArea");
 const themeSwitcher = document.querySelector(".themeSwitcher");
+const menuBtn = document.querySelector(".menuBtn");
+const dropdownList = document.querySelector(".dropdownList");
+const modalOverlay = document.getElementById("modalOverlay");
+const loginModal = document.getElementById("loginModal");
+const modalCloseBtn = document.getElementById("modalCloseBtn");
+const searchArea = document.getElementById("searchBar");
+const searchAreaInputSection = document.querySelector("#searchInput");
+const searchInput = document.getElementById("searchInput");
+const tagBtns = document.querySelectorAll(".tagBtn");
 
-
-// names and avatars 
-const names = [
-  "Ayman",
-  "Sara",
-  "Mahdi",
-  "Reza",
-  "Ahmad",
-  "Mina",
-  "Sina",
-  "Artin",
-  "Mani",
-  "Daniel",
-  "Mohammed",
-];
-const avatars = [
-  "https://i.pravatar.cc/36?img=1",
-  "https://i.pravatar.cc/36?img=2",
-  "https://i.pravatar.cc/36?img=3",
-  "https://i.pravatar.cc/36?img=4",
-  "https://i.pravatar.cc/36?img=5",
-  "https://i.pravatar.cc/36?img=6",
-  "https://i.pravatar.cc/36?img=7",
-  "https://i.pravatar.cc/36?img=8",
-  "https://i.pravatar.cc/36?img=9",
-  "https://i.pravatar.cc/36?img=10",
-  "https://i.pravatar.cc/36?img=11",
+// اسامی و آواتار
+const profiles = [
+  { name: "Ayman", avatar: "https://i.pravatar.cc/36?img=1" },
+  { name: "Sara", avatar: "https://i.pravatar.cc/36?img=5" },
+  { name: "Mahdi", avatar: "https://i.pravatar.cc/36?img=3" },
+  { name: "Reza", avatar: "https://i.pravatar.cc/36?img=4" },
+  { name: "Ahmad", avatar: "https://i.pravatar.cc/36?img=2" },
+  { name: "Mina", avatar: "https://i.pravatar.cc/36?img=16" },
+  { name: "Sina", avatar: "https://i.pravatar.cc/36?img=7" },
+  { name: "Artin", avatar: "https://i.pravatar.cc/36?img=8" },
+  { name: "Daniel", avatar: "https://i.pravatar.cc/36?img=9" },
+  { name: "Mani", avatar: "https://i.pravatar.cc/36?img=10" },
+  { name: "Mohammed", avatar: "https://i.pravatar.cc/36?img=11" },
 ];
 
+function openSidebar() {
+  sidebar.classList.add("open");
+  overlay.classList.add("show");
+}
+function closeSidebar() {
+  sidebar.classList.remove("open");
+  overlay.classList.remove("show");
+}
 // ----------------- Character Counter -----------------
 textArea.addEventListener("input", () => {
   const length = textArea.value.length;
@@ -54,7 +57,7 @@ tagContainer.addEventListener("click", (e) => {
 const loadComments = () => {
   const data = localStorage.getItem("comments");
   if (data) {
-    feedbackArea.innerHTML = data;  
+    feedbackArea.innerHTML = data; // فقط innerHTML بذار
   }
 };
 loadComments();
@@ -80,8 +83,8 @@ textArea.addEventListener("keydown", (e) => {
 function addComment(value) {
   if (value === "" || !value.includes("#") || value.length > 200) return;
 
-  const name = names[Math.floor(Math.random() * names.length)];
-  const avatar = avatars[Math.floor(Math.random() * avatars.length)];
+  const name = profiles[Math.floor(Math.random() * profiles.length)].name;
+  const avatar = profiles[Math.floor(Math.random() * profiles.length)].avatar;
 
   const card = `
     <div class="commentContainer">
@@ -91,12 +94,16 @@ function addComment(value) {
       </div>
       <div class="showComment">${value}</div>
       <div class="commentActions">
-        <button class="likeBtn">Like</button>
-        <button class="replyBtn">Reply</button>
-        <button class="deleteBtn">Delete</button>
+        <button class="likeBtn"><span class="material-symbols-outlined">favorite</span></button>
+        <button class="replyBtn"><span class="material-symbols-outlined">reply</span></button>
+        <button class="deleteBtn"><span class="material-symbols-outlined">delete</span></button>
       </div>
     </div>
   `;
+  const firstCard = feedbackArea.querySelector(".commentContainer");
+  if (firstCard) {
+    firstCard.classList.add("animate__animated", "animate__bounceIn");
+  }
   feedbackArea.insertAdjacentHTML("afterbegin", card);
   textArea.value = "";
   counter.textContent = 200;
@@ -109,18 +116,18 @@ feedbackArea.addEventListener("click", (e) => {
   if (!card) return;
 
   // Like
-  if (e.target.classList.contains("likeBtn")) {
-    e.target.classList.toggle("liked");
+  if (e.target.closest(".likeBtn")) {
+    e.target.closest(".likeBtn").classList.toggle("liked");
   }
 
   // Delete
-  if (e.target.classList.contains("deleteBtn")) {
+  if (e.target.closest(".deleteBtn")) {
     card.remove();
     saveComments();
   }
 
   // Reply
-  if (e.target.classList.contains("replyBtn")) {
+  if (e.target.closest(".replyBtn")) {
     if (!card.querySelector(".replySection")) {
       const replySection = `
         <div class="replySection">
@@ -133,18 +140,19 @@ feedbackArea.addEventListener("click", (e) => {
   }
 
   // Submit Reply
-  if (e.target.classList.contains("submitReplyBtn")) {
-    const replyTextarea = e.target.previousElementSibling;
+  if (e.target.closest(".submitReplyBtn")) {
+    const replyTextarea =
+      e.target.closest(".submitReplyBtn").previousElementSibling;
     const replyText = replyTextarea.value.trim();
     if (replyText === "") return;
     const replyHTML = `<div class="replyCard">${replyText}</div>`;
     card.insertAdjacentHTML("beforeend", replyHTML);
-    e.target.parentElement.remove();
+    e.target.closest(".submitReplyBtn").parentElement.remove();
     saveComments();
   }
 });
 
-// for Enter and submit
+// ----------------- Enter برای ریپلای -----------------
 feedbackArea.addEventListener("keydown", (e) => {
   if (
     e.target.classList.contains("replyTextArea") &&
@@ -155,7 +163,7 @@ feedbackArea.addEventListener("keydown", (e) => {
     e.target.nextElementSibling.click();
   }
 });
-// theme selection
+// انتخاب دکمه‌های تم
 
 const themeButtons = document.querySelectorAll(".themeBtn");
 const root = document.documentElement;
@@ -244,5 +252,85 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const savedTheme = localStorage.getItem("theme") || "navy";
   applyTheme(savedTheme);
+});
+
+menuBtn.addEventListener("click", (e) => {
+  e.stopPropagation();
+  dropdownList.classList.toggle("show");
+  if (dropdownList.classList.contains("show")) {
+    dropdownList.classList.add("animate__animated", "animate__fadeInDown");
+  }
+});
+
+document.addEventListener("click", () => {
+  dropdownList.classList.remove("show");
+});
+document.querySelector(".loginLink").addEventListener("click", () => {
+  openModal();
+});
+
+function openModal() {
+  loginModal.classList.add("show");
+  modalOverlay.classList.add("show");
+  loginModal.classList.add("animate__animated", "animate__zoomIn");
+}
+
+function closeModal() {
+  loginModal.classList.add("animate__animated", "animate__zoomOut");
+  setTimeout(() => {
+    loginModal.classList.remove("show");
+    modalOverlay.classList.remove("show");
+    loginModal.classList.remove("animate__animated", "animate__zoomOut");
+  }, 400);
+}
+
+modalCloseBtn.addEventListener("click", closeModal);
+modalOverlay.addEventListener("click", closeModal);
+
+document.getElementById("searchToggleBtn").addEventListener("click", () => {
+  document.getElementById("searchBar").classList.toggle("hidden");
+});
+
+searchArea.addEventListener("click", (e) => {
+  if (e.target.classList.contains("tagBtn")) {
+    searchAreaInputSection.value = e.target.textContent;
+  }
+});
+// Search & Filter
+
+let activeTag = "all";
+let searchQuery = "";
+
+function filterComments() {
+  const comments = document.querySelectorAll(".commentContainer");
+
+  comments.forEach((comment) => {
+    const text = comment
+      .querySelector(".showComment")
+      .textContent.toLowerCase();
+
+    const matchesSearch = text.includes(searchQuery.toLowerCase());
+    const matchesTag = activeTag === "all" || text.includes("#" + activeTag);
+
+    if (matchesSearch && matchesTag) {
+      comment.style.display = "block";
+    } else {
+      comment.style.display = "none";
+    }
+  });
+}
+
+searchInput.addEventListener("input", (e) => {
+  searchQuery = e.target.value;
+  filterComments();
+});
+
+tagBtns.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    tagBtns.forEach((b) => b.classList.remove("active"));
+    btn.classList.add("active");
+    activeTag = btn.dataset.tag;
+    filterComments();
+  });
 });
 
