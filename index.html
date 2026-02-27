@@ -3,30 +3,85 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>KeydowN</title>
+    <title>User List</title>
+    <script
+      src="https://kit.fontawesome.com/e195b12aff.js"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+      rel="stylesheet"
+    />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
       rel="stylesheet"
     />
-    <script
-      src="https://kit.fontawesome.com/e195b12aff.js"
-      crossorigin="anonymous"
-    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+
     <link rel="stylesheet" href="style.css" />
   </head>
 
+  <!-- Overlay -->
+  <div class="modalOverlay" id="modalOverlay"></div>
+
+  <!-- Modal -->
+  <div class="loginModal" id="loginModal">
+    <button class="modalCloseBtn" id="modalCloseBtn">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+
+    <h2 class="modalTitle">Welcome Back</h2>
+    <p class="modalSubtitle">Login to KeyDown</p>
+
+    <form class="loginForm">
+      <div class="inputGroup">
+        <i class="fa-solid fa-user"></i>
+        <input type="text" placeholder="Username" />
+      </div>
+      <div class="inputGroup">
+        <i class="fa-solid fa-lock"></i>
+        <input type="password" placeholder="Password" />
+      </div>
+      <button type="submit" class="loginBtn">Login</button>
+    </form>
+
+    <p class="switchText">
+      Don't have an account? <span id="switchToRegister">Sign up</span>
+    </p>
+  </div>
+
   <body>
     <header>
+      <div class="menuDropdown">
+        <button class="menuBtn">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <ul class="dropdownList">
+          <li><i class="fa-solid fa-house"></i> Home</li>
+          <li><i class="fa-solid fa-fire"></i> Trending</li>
+          <li><i class="fa-solid fa-bookmark"></i> Saved</li>
+          <li class="divider"></li>
+          <li class="loginLink">
+            <i class="fa-solid fa-right-to-bracket"></i> Login
+          </li>
+        </ul>
+      </div>
+
+      <h1 class="logo">keYDown</h1>
+
       <div class="themeSwitcher">
         <button class="themeBtn" data-theme="navy"></button>
         <button class="themeBtn" data-theme="cyber"></button>
         <button class="themeBtn" data-theme="sunset"></button>
       </div>
-
-      <h1 class="logo">keYDown</h1>
     </header>
+
     <div class="largeContainer">
       <div class="typeArea">
         <form class="form">
@@ -41,9 +96,28 @@
           </div>
         </form>
       </div>
+      <div class="feedbackSection">
+      <div class="feedbackHeader">
+        <h2 class="feedbackTitle">Feedbacks</h2>
+        <button class="searchToggleBtn" id="searchToggleBtn">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </div>
 
+      <div class="searchBar hidden" id="searchBar">
+        <input type="text" id="searchInput" placeholder="Search feedbacks..." />
+        <div class="tagFilters">
+          <button class="tagBtn active" data-tag="all"># all</button>
+          <button class="tagBtn" data-tag="bug"># bug</button>
+          <button class="tagBtn" data-tag="feature"># feature</button>
+          <button class="tagBtn" data-tag="ui"># ui</button>
+          <button class="tagBtn" data-tag="other"># other</button>
+        </div>
+      </div>
       <div class="feedbackArea"></div>
     </div>
+  </div>
+
     <ul class="hashtagContainer">
       <li class="tagList" id="javascript">#javascript</li>
       <li class="tagList" id="Nike">#Nike</li>
@@ -54,3 +128,4 @@
   </body>
   <script src="script.js"></script>
 </html>
+
